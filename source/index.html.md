@@ -3,12 +3,8 @@ title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - shell
-  - ruby
-  - python
-  - javascript
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
   - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
 
 includes:
@@ -17,219 +13,139 @@ includes:
 search: true
 ---
 
-# Introduction
+# 简介 
 
-欢迎使用Musicwow API!  本文档描述了所有的后台接口，提供于MusicWoW iOS及Android客户端所用REST API
+欢迎使用Musicwow API, 本文档描述了所有的Musicwow音乐窝APP后台接口，提供于MusicWoW iOS及Android客户端所用RESTful API。由于历史原因，musicwow部分接口来源于原外包团队(fanwe)，本文档也一并记录。
 
-# Authentication
+# 认证类型
 
-> To authorize, use this code:
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
+## 认证类型
 
 ```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
+curl "http://dev.conwaysmusic.com/mapi/index.php？ctl=user_center&act=authent&itype=edu"
 ```
 
-```javascript
-const kittn = require('kittn');
+> 返回结果示例:
 
-let api = kittn.authorize('meowmeowmeow');
+```json
+{
+  "status": 1,
+  "error": "",
+  "title": "印客认证",
+  "user": {
+    "id": "167182",
+    "user_id": "167182",
+    "investor_send_info": "",
+    "authentication_type": "",
+    "authentication_name": "",
+    "identify_number": "",
+    "contact": "",
+    "from_platform": "",
+    "wiki": "",
+    "identify_positive_image": "",
+    "identify_nagative_image": "",
+    "identify_hold_image": "",
+    "is_authentication": "0"
+  },
+  "authent_list": [
+    {
+      "id": "1",
+      "name": "教师"
+    },
+    {
+      "id": "2",
+      "name": "机构"
+    }
+  ],
+  "investor_send_info": ""
+}
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
+获取认证信息。
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+### HTTP 请求
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+`POST http://dev.conwaysmusic.com/mapi/index.php？ctl=user_center&act=authent&itype=edu`
 
-`Authorization: meowmeowmeow`
+### 请求参数
+
+| Parameter    | Default | Description                                                  |
+| ------------ | ------- | ------------------------------------------------------------ |
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+更多返回错误代码请看首页的错误代码描述
 </aside>
 
-# Kittens
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
+## 教师认证
 
 ```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
+curl "http://dev.conwaysmusic.com/mapi/index.php?ctl=user_center&act=attestation&itype=edu"
 ```
 
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
-
-> The above command returns JSON structured like this:
+> 返回结果示例:
 
 ```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
-
-This endpoint retrieves all kittens.
-
-### HTTP Request
-
-`GET http://example.com/api/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+ {
+    "status": 1, 
+    "error": ""
 }
 ```
 
-This endpoint retrieves a specific kitten.
+查询教师认证状态.
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+<aside class="notice">更多返回错误代码请看首页的错误代码描述</aside>
 
-### HTTP Request
+### HTTP 请求
 
-`GET http://example.com/kittens/<ID>`
+`POST http://dev.conwaysmusic.com/mapi/index.php?ctl=user_center&act=attestation&itype=edu`
 
-### URL Parameters
+###请求方式
+POST
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
+### URL 参数
+<table>
+<tr><td>参数</td><td>必选</td><td>类型</td><td>说明</td></tr>
+<tr><td>authentication_type</td><td>是</td><td>string</td><td>认证类型</td></tr>
+<tr><td>authentication_name</td><td>是</td><td>string</td><td>认证名称</td></tr>
+<tr><td>contact</td><td>	是</td><td>	string</td><td>	联系方式</td><</tr>
+<tr><td>teaching_certificate</td><td>	是</td><td>	string</td><td>	教师资格证</td></tr>
+<tr><td>education_certificate</td><td>	是</td><td>	string</td><td>	学历证书</td></tr>
+<tr><td>identify_number</td><td>	是</td><td>	string</td><td>	身份证号码</td></tr>
+<tr><td>identify_hold_image</td><td>	是</td><td>	string</td><td>	手持身份证照片</td></tr>
+<tr><td>identify_positive_image</td><td>	是</td><td>	string</td><td>	身份证正面</td></tr>
+<tr><td>identify_negative_image</td><td>	是</td><td>	string</td><td>	身份证反面</td></tr>
+</table>
 
-## Delete a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
+## 机构认证
 
 ```shell
-curl "http://example.com/api/kittens/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
+curl "http://dev.conwaysmusic.com/mapi/index.php?ctl=user_center&act=attestation&itype=edu"
 ```
 
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
-
-> The above command returns JSON structured like this:
+> 返回结果示例:
 
 ```json
 {
-  "id": 2,
-  "deleted" : ":("
+    "status": 1, 
+    "error": ""
 }
 ```
 
-This endpoint deletes a specific kitten.
+查询机构认证信息.
 
-### HTTP Request
+### HTTP 请求
 
-`DELETE http://example.com/kittens/<ID>`
+`POST http://dev.conwaysmusic.com/mapi/index.php?ctl=user_center&act=attestation&itype=edu`
 
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
+### URL 参数
+<table>
+<tr><td>参数</td><td>必选</td><td>类型</td><td>说明</td></tr>
+<tr><td>authentication_type</td><td>是</td><td>string</td><td>认证类型</td></tr>
+<tr><td>authentication_name</td><td>是</td><td>string</td><td>认证名称</td></tr>
+<tr><td>contact</td><td>是</td><td>string</td><td>联系方式</td><</tr>
+<tr><td>business_license</td><td>是</td><td>string</td><td>营业资格证</td></tr>
+<tr><td>identify_number</td><td>是</td><td>string</td><td>身份证号码</td></tr>
+<tr><td>identify_positive_image</td><td>是</td><td>string</td><td>身份证正面</td></tr>
+<tr><td>identify_negative_image</td><td>是</td><td>string</td><td>身份证反面</td></tr>
+</table>
 
